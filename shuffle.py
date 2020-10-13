@@ -61,7 +61,7 @@ def log_4(n):
 def make_hilbert_png(ordering, png_filename):
     '''Takes a shuffled list of integers 0...n and visualizes it as an image.'''
     hilbert_order = log_4(len(ordering))
-    hues = np.linspace(0, 255, len(ordering))
+    hues = np.linspace(0, 255, len(np.unique(ordering)))
     image_dims = 2 ** hilbert_order
     image_array = np.zeros([image_dims, image_dims, 3])
     for index, coord in zip(ordering, hilbert_curve(hilbert_order)):
