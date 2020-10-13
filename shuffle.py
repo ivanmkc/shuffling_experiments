@@ -60,6 +60,11 @@ def log_4(n):
 
 def make_hilbert_png(ordering, png_filename):
     '''Takes a shuffled list of integers 0...n and visualizes it as an image.'''
+    # Truncate to the largest even power of 2 to get a square image
+    power_of_two = math.floor(math.log2(len(ordering)))
+    power_of_two = power_of_two if power_of_two % 2 == 0 else power_of_two - 1
+    ordering = ordering[:(2 ** power_of_two)]
+
     hilbert_order = log_4(len(ordering))
     hues = np.linspace(0, 255, len(ordering))
     image_dims = 2 ** hilbert_order
