@@ -61,11 +61,19 @@ def log_4(n):
 def make_hilbert_png(ordering, png_filename):
     '''Takes a shuffled list of integers 0...n and visualizes it as an image.'''
     hilbert_order = log_4(len(ordering))
-    hues = np.linspace(0, 255, len(ordering))
+
+    order_to_hue_index_map = dict()    
+    for index, order in enumerate(set(ordering)):
+        order_to_hue_index_map[order] = index + 1
+    
+    # Add one to represent unmodified pixels
+    hues = np.linspace(0, 200, len(order_to_hue_index_map)+1)
+    
     image_dims = 2 ** hilbert_order
     image_array = np.zeros([image_dims, image_dims, 3])
     for index, coord in zip(ordering, hilbert_curve(hilbert_order)):
-        image_array[coord][0] = hues[index]
+        image_array[coord][0] = hues[order_to_hue_index_map[index]]
+        
     image_array[:, :, 1] = SATURATION
     image_array[:, :, 2] = VALUE
     image_array = image_array.astype(np.uint8)
